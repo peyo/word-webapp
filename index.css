@@ -1,0 +1,89 @@
+* {
+  box-sizing: border-box;
+}
+  
+body {
+  font-family: 'Helvetica', sans-serif;
+  color: #606060;
+  font-weight: 349;
+}
+
+h1 {
+  font-weight: 400;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+form {
+  text-align: center;
+}
+
+.search {
+  justify-content: center;
+  border-radius: 3em;
+  width: 100%;
+  border: 1px solid #c0c0c0;
+}
+
+#word-search {
+  width: 80%;
+  margin: 3px;
+  padding: 6px;
+  outline: none;
+  border: none;
+  color: #606060;
+  font-weight: 350;
+}
+
+i.fa {
+  display: inline;
+  position: relative;
+}
+
+.button-container {
+  padding-top: 21px;
+}
+
+.button {
+  border: 1px solid #ffffff;
+  background-color: #e0e0e0;
+  padding: 6px 15px 6px 15px;
+  color: #606060;
+  font-weight: 340;
+  border-radius: .2em;
+}
+
+.button:hover {
+  border: 1px solid #606060;
+}
+
+.button:active {
+  border: 1px solid #0080ff;
+}
+
+.button:focus {
+  outline: 0;
+}
+
+.hr-poem {
+  border: .5px solid #a0a0a0;
+  width: 30%;
+  margin: 9% 0 3% 0;
+}
+
+.poem {
+  text-align: center;  
+  width: 30%;
+  margin: 0 auto;
+}
+
+.poem p {
+  display: inline-block;
+  text-align: left;
+}
