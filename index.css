@@ -1,3 +1,4 @@
+/* start - all pages */
 * {
   box-sizing: border-box;
 }
@@ -12,23 +13,8 @@ h1 {
   font-weight: 400;
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
 form {
   text-align: center;
-}
-
-.search {
-  justify-content: center;
-  border-radius: 3em;
-  width: 100%;
-  border: 1px solid #c0c0c0;
 }
 
 #word-search {
@@ -44,6 +30,23 @@ form {
 i.fa {
   display: inline;
   position: relative;
+}
+/* end - all pages */
+
+/* start - index.html */
+.container-index {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.search-index {
+  justify-content: center;
+  border-radius: 3em;
+  width: 100%;
+  border: 1px solid #c0c0c0;
 }
 
 .button-container {
@@ -87,3 +90,99 @@ i.fa {
   display: inline-block;
   text-align: left;
 }
+/* end - index.html */
+
+/* start - result.html */
+.container-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.container-result {
+  margin: 12px 0 0 12px;
+}
+
+.search-result {
+  justify-content: center;
+  border-radius: 3em;
+  width: 100%;
+  border: 1px solid #c0c0c0;
+}
+
+.wotd {
+  text-align: left;
+  margin: 6px 0 0 24px;
+}
+
+#day {
+  position: relative;
+  border: none;
+  color: #606060;
+  outline: none;
+  width: 51%;
+}
+
+.container-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin: 33px 0 0 24px;
+}
+
+.title {
+  font-size: larger;
+  font-weight: 500;
+  margin: 0 0 12px 0;
+}
+
+.text {
+  margin: 0 0 12px 0;
+}
+
+.lyr-text {
+  margin: 0 0 12px 0;
+}
+
+.book-cover-container {
+  display: flex;
+  align-items: center;
+  margin: 0 0 12px 0;
+}
+
+.oth-cover-container {
+  display: flex;
+  align-items: center;
+  margin: 0 0 12px 0;
+}
+
+.book-cover {
+  margin: 0 12px 0 0;
+}
+
+.yt-container {
+  display: flex;
+  align-items: center;
+  margin: 0 0 12px 0;
+}
+
+@media only screen and (max-width: 320px) {
+  .oth-cover-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 6px 0 12px 0;
+  }
+
+  .book-cover {
+    margin: 0 0 12px 0;
+  }
+
+  .book-cover:last-of-type {
+    margin: 0;
+  }
+}
+
+/* end - result.html */

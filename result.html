@@ -9,35 +9,104 @@
     <meta name="author" content="Peter Yoon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="index.css">
     <link rel="shortcut icon" href="https://raw.githubusercontent.com/peyo/portfolio-website/master/images/favicon.ico"
         type="image/x-icon">
 </head>
 
 <body>
-    <div class="container">
-        <h1>WORD</h1>
-        <form id="js-form">
-            <div class="search">                
-                <i class="fa fa-search"></i>
-                <input type="search" name="word-search" id="word-search">
+    <div class="container-result">
+        <div class="container-form">
+            <form id="js-form">
+                <div class="search-result">
+                    <i class="fa fa-search"></i>
+                    <input type="search" name="word-search" id="word-search" Placeholder="Search">
+                </div>
+                <div class="wotd">
+                    <input class="button" type="submit" value="Random Word">
+                </div>
+            </form>
+        </div>
+        <div class="container-content">
+            <div class="definition-con">
+                <div class="title">
+                    <span class="def-title">Def-title</span>
+                </div>
+                <div class="text">
+                    <span class="def">def</span>
+                </div>
             </div>
-            <div class="button-container">
-                <input class="button" type="submit" value="Search">
-                <input class="button" type="submit" value="Word of the Day">
+            <div class="etymology-con">
+                <div class="title">
+                    <span class="ety-title">Ety-title</span>
+                </div>
+                <div class="text">
+                    <span class="ety">ety</span>
+                </div>
             </div>
-        </form>
-        <hr class="hr-poem">
-        <div class="poem">
-            <p>A word is dead<br>
-                When it is said,<br>
-                Some say.<br>
-                I say it just<br>
-                Begins to live<br>
-                That day.<br><br>
-                —Emily Dickinson<br>
-                <i>A Word is Dead</i></p>
+            <div class="sentiment-score-con">
+                <div class="title">
+                    <span class="sen-title">Sen-title</span>
+                </div>
+                <div class="text">
+                    <span class="sen">sen</span>
+                </div>
+            </div>
+            <div class="poetry-con">
+                <div class="title">
+                    <span class="poe-title">Poe-title</span>
+                </div>
+                <div class="text">
+                    <span class="sen">poe</span>
+                </div>
+            </div>
+            <div class="book-con">
+                <div class="title">
+                    <span class="boo-title">Boo-title</span>
+                </div>
+                <div class="book-cover-container">
+                    <div><img class="book-cover" src="https://via.placeholder.com/150x175" alt="Image of book."></div>
+                </div>
+            </div>
+            <div class="other-books-con">
+                <div class="title">
+                    <span class="oth-title">Oth-title</span>
+                </div>
+                <div class="oth-cover-container">
+                    <div><img class="book-cover" src="https://via.placeholder.com/150x175" alt="Image of book."></div>
+                    <div><img class="book-cover" src="https://via.placeholder.com/130x120" alt="Image of book."></div>
+                    <div><img class="book-cover" src="https://via.placeholder.com/140x135" alt="Image of book."></div>
+                </div>
+            </div>
+            <div class="question-con">
+                <div class="title">
+                    <span class="que-title">Que-title</span>
+                </div>
+                <div class="text">
+                    <span class="que">que</span>
+                </div>
+            </div>
+            <div class="lyrics-con">
+                <div class="title">
+                    <span class="lyr-title">Lyr-title</span>
+                </div>
+                <div class="lyr-text">
+                    <span class="lyr">lyr</span>
+                </div>
+                <div class="yt-container">
+                    <div><img class="book-cover" src="https://via.placeholder.com/560x315" alt="Image of book."></div>
+                </div>
+            </div>
+            <div class="news-headline-con">
+                <div class="title">
+                    <span class="new-title">New-title</span>
+                </div>
+                <div class="text">
+                    <span class="new">new</span>
+                </div>
+            </div>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.js"

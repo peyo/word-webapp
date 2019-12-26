@@ -16,18 +16,19 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="container-index">
         <h1>WORD</h1>
         <form id="js-form">
-            <div class="search">                
+            <div class="search-index">                
                 <i class="fa fa-search"></i>
-                <input type="text" name="word-search" id="word-search">
+                <input type="search" name="word-search" id="word-search" placeholder="Search">
             </div>
             <div class="button-container">
                 <input class="button" type="submit" value="Search">
-                <input class="button" type="submit" value="Word of the Day">
+                <input class="button" type="submit" value="Random Word" formaction="">
             </div>
         </form>
+        <div id="js-error-message"></div>
         <hr class="hr-poem">
         <div class="poem">
             <p>A word is dead<br>
