@@ -1,3 +1,10 @@
+//this version attempted to use Google's Cloud Natural Language API
+//to get a sentiment score of the searched word. Essentially,
+//when someone searches for a word, the definition of the word
+//would be used as the line of text to receive a sentiment score from
+//the NL API. However, the NL API is only applicable via server-side,
+//which I have not learned yet.
+
 "use strict";
 
 const dictApiKey = "9a6fa605-ec50-4c47-8446-289dd1604617";
@@ -40,6 +47,45 @@ function searchNews(word) {
     fetchNewsApi(newsUrl);
 }
 
+//2.5 add parameters to Sentiment endpoint and fetch API
+function searchSenti(dictData) {
+    const sentiParams = {
+        key: sentiApiKey,
+    };
+
+    const sentiApiKeyString = formatQueryParams(sentiParams)
+    const sentiUrl = sentiAnEndPoint + "?" + sentiApiKeyString;
+
+    const def = dictData[0].shortdef[0]
+    const dict = {
+        "document": {
+            "language": "en-us",
+            "type": "PLAIN_TEXT",
+            "content": `"${def}"`
+        },
+        "encodingType": "UTF8"
+    };
+
+    const nlCallOptions = {
+        method: "post",
+        contentType: "application/json",
+        payload: JSON.stringify(dict)
+    };
+
+    fetch(sentiUrl, nlCallOptions)
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        }
+        throw new Error(response.statusText);
+    })
+    .then(sentiData => parseSenti(sentiData))
+//    .catch(err => {
+//        $("#error-message").removeClass("hidden");
+//        $("#js-error-message").text(`Something went wrong with the Sentiment API: ${err.message}`);
+//    });
+}
+
 //2.1 formats query parameters for all endpoints
 function formatQueryParams(params) {
     const queryItems = Object.keys(params)
@@ -57,10 +103,10 @@ function fetchDictApi(dictUrl) {
         throw new Error(response.statusText);
     })
     .then(dictData => displayDictApi(dictData))
-    //.catch(err => {
-    //    $("#error-message").removeClass("hidden");
-    //    $("#js-error-message").text(`Something went wrong with the Dictionary API: ${err.message}`);
-    //});
+    .catch(err => {
+        $("#error-message").removeClass("hidden");
+        $("#js-error-message").text(`Something went wrong with the Dictionary API: ${err.message}`);
+    });
 }
 
 //3.2 fetch data from Poetry API
@@ -89,19 +135,23 @@ function fetchNewsApi(newsUrl) {
         throw new Error(response.statusText);
     })
     .then(newsData => displayNewsApi(newsData))
-    .catch(err => {
-        $("#error-message").removeClass("hidden");
-        $("#js-error-message").text(`Something went wrong with the News API: ${err.message}`);
-    });
+    //.catch(err => {
+    //    $("#error-message").removeClass("hidden");
+    //    $("#js-error-message").text(`Something went wrong with the News API: ${err.message}`);
+    //});
 }
 
-//3.4 parse data and extract sentiment score from sentimood.js
-function searchSenti(dictData) {
-    const def = dictData[0].shortdef[0]
-    let sentimood = new Sentimood();
-    console.log(sentimood.analyze(`"${def}"`))
-}
+//3.4 parse data and extract sentiment score
+function parseSenti(sentiData) {
+    const data = JSON.parse(sentiData);
+    
+    const sentiment = 0.0;
+    if (data && data.documentSentiment && data.documentSentiment.score){
+       sentiment = data.documentSentiment.score;
+    }
 
+    console.log(sentiment);
+}
 
 //4.1 display responseJson from Dictionary API in DOM
 function displayDictApi(dictData) {
