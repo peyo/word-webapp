@@ -1,9 +1,9 @@
 "use strict";
 
-const dictApiKey = "9a6fa605-ec50-4c47-8446-289dd1604617";
-const randoApiKey = "YDXHFI5P";
-const newsApiKey = "613cb9c032f64352862a71de23221e44";
-const sentiApiKey = "AIzaSyBTvtLY_gZV6NpwJJTNHScZxC1ta6vNsQM";
+const dictApiKey = "API KEY";
+const randoApiKey = "API KEY";
+const newsApiKey = "API KEY";
+const sentiApiKey = "API KEY";
 
 const dictEndPoint = "https://www.dictionaryapi.com/api/v3/references/collegiate/json/";
 const randoEndPoint = "https://random-word-api.herokuapp.com//word";
@@ -79,7 +79,7 @@ function fetchPoemApi(poemUrl) {
     });
 }
 
-//3.3 fetch data from Poetry API
+//3.3 fetch data from News API
 function fetchNewsApi(newsUrl) {
     fetch(newsUrl)
     .then(response => {
