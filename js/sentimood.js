@@ -5,7 +5,9 @@ sentimood v1.0
 a CoffeeScript browser-compatible port of thinkroth's Sentimental
 open-source under the MIT license, (c) Ethan Arterberry 2015
  */
-var Sentimood = (function() {
+var Sentimood;
+
+Sentimood = (function() {
   var afinn;
 
   function Sentimood() {}
