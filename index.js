@@ -1,75 +1,55 @@
 "use strict";
 
-//0a API keys and endpoints
-//*** API KEY HERE ***
+// API keys and endpoints
+const wordApiKey = "API KEY";
+const sentiApiKey = "API KEY";
+const ytApiKey = "API KEY";
+const bookApiKey = "API KEY";
+const lyricsApiKey = "API KEY";
 
 const wordEndPoint = "https://api.wordnik.com/v4/words.json/randomWord";
-const dictEndPoint = "https://www.dictionaryapi.com/api/v3/references/collegiate/json/";
+const dictEndPoint = "https://api.wordnik.com/v4/word.json/";
 const poemEndPoint = "http://poetrydb.org/lines/";
-const newsEndPoint = "https://newsapi.org/v2/everything";
 const sentiAnEndPoint = "https://language.googleapis.com/v1/documents:analyzeSentiment";
 const bookEndPoint = "https://www.googleapis.com/books/v1/volumes";
+const lyricsIdEndPoint = "https://api.happi.dev/v1/music";
+const lyricsEndPoint = "https://api.happi.dev/v1/music/";
 
-//0b template engine for taking in title and video id for YT used in 2.5. https://github.com/FriesFlorian/tplawesome
-function tplawesome(e,t) {
+// template engine for taking in title and video id for YT used in 2.5. https://github.com/FriesFlorian/tplawesome
+function tplawesome(e, t) {
     let res = e;
-    for (var n=0; n<t.length; n++) {
-        res=res.replace(/\{\{(.*?)\}\}/g, function (e,r) {
+    for (var n = 0; n < t.length; n++) {
+        res = res.replace(/\{\{(.*?)\}\}/g, function (e, r) {
             return t[n][r]
-        })
-    }
+        });
+    };
     return res
 }
 
-//2.1 formats query parameters for all endpoints
+// formatter used across all APIs (exluding Lyrics API)
 function formatQueryParams(params) {
     const queryItems = Object.keys(params)
         .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`);
     return queryItems.join("&");
 }
 
-//2.2 add parameters to Dictionary endpoint
+// DICTIONARY DICTIONARY DICTIONARY DICTIONARY DICTIONARY DICTIONARY DICTIONARY DICTIONARY DICTIONARY
+// add parameters to Dictionary endpoint
 function searchWord(word) {
     const dictParams = {
-        key: dictApiKey,
+        limit: 1,
+        includeRelated: false,
+        useCanonical: true,
+        includeTags: false,
+        api_key: wordApiKey,
     };
 
     const dictApiKeyString = formatQueryParams(dictParams)
-    const dictUrl = dictEndPoint + word + "?" + dictApiKeyString;
+    const dictUrl = dictEndPoint + word + "/definitions?" + dictApiKeyString;
     fetchDictApi(dictUrl);
 }
 
-//2.3 add parameters to Poem endpoint
-function searchPoem(word) {
-    const poemUrl = poemEndPoint + word + "/title,author,lines.json";
-    fetchPoemApi(poemUrl);
-}
-
-//2.4 add parameters to News endpoint
-function searchNews(word) {
-    const newsParams = {
-        q: word,
-        apiKey: newsApiKey,
-    }
-
-    const newsApiKeyString = formatQueryParams(newsParams)
-    const newsUrl = newsEndPoint + "?" + newsApiKeyString;
-    fetchNewsApi(newsUrl);
-}
-
-//2.5 add parameters to Book endpoint
-function searchBook(poemTitle) {
-    const bookParams = {
-        q: poemTitle,
-        key: bookApiKey,
-    }
-    
-    const bookApiKeyString = formatQueryParams(bookParams)
-    const bookUrl = bookEndPoint + "?" + bookApiKeyString;
-    fetchBookApi(bookUrl);
-}
-
-//3.1 fetch responseJson from Dictionary API
+// fetch Dictionary API
 function fetchDictApi(dictUrl) {
     fetch(dictUrl)
         .then(response => {
@@ -79,85 +59,16 @@ function fetchDictApi(dictUrl) {
             throw new Error(response.statusText);
         })
         .then(dictData => displayDictApi(dictData))
-    //.catch(err => {
-    //    $("#error-message").removeClass("hidden");
-    //    $("#js-error-message").text(`Something went wrong with the Dictionary API: ${err.message}`);
-    //});
+        .catch(err => {
+            $("#error-message").removeClass("hidden");
+            $("#js-error-message").text(`Something went wrong with the Dictionary API: ${err.message}`);
+        });
 }
 
-//3.2 fetch data from Poetry API
-function fetchPoemApi(poemUrl) {
-    fetch(poemUrl)
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            }
-            throw new Error(response.statusText);
-        })
-        .then(poemData => displayPoemApi(poemData))
-//        .catch(err => {
-//            $("#error-message").removeClass("hidden");
-//            $("#js-error-message").text(`Something went wrong with the Poem API: ${err.message}`);
-//        });
-}
-
-//3.3 fetch data from News API
-function fetchNewsApi(newsUrl) {
-    fetch(newsUrl)
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            }
-            throw new Error(response.statusText);
-        })
-        .then(newsData => displayNewsApi(newsData))
-    //    .catch(err => {
-    //        $("#error-message").removeClass("hidden");
-    //        $("#js-error-message").text(`Something went wrong with the News API: ${err.message}`);
-    //    });
-}
-
-//3.4 fetch data from YouTube API
-function initYT() {
-    gapi.client.setApiKey(ytApiKey);
-    gapi.client.load("youtube", "v3", function () {
-    });
-}
-
-//3.5 fetch data from News API
-function fetchBookApi(bookUrl) {
-    fetch(bookUrl)
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            }
-            throw new Error(response.statusText);
-        })
-        .then(bookData => displayBookApi(bookData))
-    //    .catch(err => {
-    //        $("#error-message").removeClass("hidden");
-    //        $("#js-error-message").text(`Something went wrong with the News API: ${err.message}`);
-    //    });
-}
-
-//4.1 display responseJson from Dictionary API in DOM
+// display Dictionary API response in DOM
 function displayDictApi(dictData) {
-    console.log("dict data", dictData)
-
     //uppercase first letter of word searched and remove : and characters that appear after
-    const lower = dictData[0].meta.id;
-    let newLower = lower;
-    if (lower.indexOf(":") > -1) {
-        newLower = newLower.substring(0, newLower.indexOf(":"));
-    };
-        const upper = newLower.replace(/^\w/, function (chr) {
-        return chr.toUpperCase();
-    });
-    console.log("edited word", newLower);
-
-    if (dictData[0].meta.id === undefined) {
-        dictData = "-";
-    }
+    const lower = dictData[0].word;
 
     //replace strings in etymology
     //const ety = dictData[0].et[0][1];
@@ -175,249 +86,337 @@ function displayDictApi(dictData) {
     $("#def").empty();
     $("#ety").empty();
     $("#container-result").removeClass("hidden");
-    $("#def-word").append(upper)
-    $("#def").append(`
-        <p id="shortdef-0">1. ${dictData[0].shortdef[0]}</p>
-        <p id="shortdef-1">2. ${dictData[0].shortdef[1]}</p>
-        <p id="shortdef-2">3. ${dictData[0].shortdef[2]}</p>`);
+    $("#def-word").append(`<b>${lower}</b> <i>(part of speech: ${dictData[0].partOfSpeech})</i>`)
+    $("#def").append(`<p id="shortdef-0">${dictData[0].text}</p>`);
 
-    //if definition is undefined hide paragraph
-    if (dictData[0].shortdef[0] === undefined) {
-        $("#shortdef-0").addClass("hidden");
-    };
-    if (dictData[0].shortdef[1] === undefined) {
-        $("#shortdef-1").addClass("hidden");
-    };
-    if (dictData[0].shortdef[2] === undefined) {
-        $("#shortdef-2").addClass("hidden");
-    };
     //$("#ety").append(`
     //    <p>${lastEty}</p>
     //    <p>${bDat}</p>`);
     searchSentiDict(dictData);
-    searchPoem(newLower);
-    searchYT(newLower);
-    searchNews(newLower);
+    searchLyricsId(lower);
+    searchPoem(lower);
 }
 
-//4.2 display responseJson from Poem API in DOM
-function displayPoemApi(poemData) {
-    console.log("poem data", poemData)
-
-    //check is poem has more than one line (or more than one element in array)
-    let poetry = poemData[0].lines.join("<br>");
-
-    $("#poe-title2").empty();
-    $("#poet").empty();
-    $("#poe").empty();
-    $("#poe-title2").append(`${poemData[0].title}`);
-    $("#poet").append(`By ${poemData[0].author}`);
-    $("#poe").append(poetry);
-    searchSentiPoem(poemData);
-    searchBook(poemData[0].title);
-
-    //if poem is undefined then add hidden class
-    if (poemData[0].title === undefined) {
-        $("#poe-title2").addClass("hidden");
-    };
-    if (poemData[0].author === undefined) {
-        $("#poet").addClass("hidden");
-    };
-    if (poetry === undefined) {
-        $("#poe").addClass("hidden");
-    };
-    if (poemData.status === "404") {
-        $("#poe-title2").addClass("hidden");
-    };
-    if (poemData.status === "404") {
-        $("#poet").addClass("hidden");
-    };
-    if (poemData.status === "404") {
-        $("#poe").addClass("hidden");
-    };
+// get dictionary sentiment score
+function searchSentiDict(dictData) {
+    const def = dictData[0].text;
+    let sentimood = new Sentimood();
+    let senti = sentimood.analyze(`"${def}"`);
+    let final = (Math.round(senti.score * 10) / 10).toFixed(1);
+    displayDictSentScore(final);
 }
 
-//4.3 display responseJson from News API in DOM
-function displayNewsApi(newsData) {
-    console.log("news data", newsData)
-
-    //if definition is undefined return - (dash)
-    if (newsData.articles[3].title === undefined) {
-        newsData.articles[3].title = "-";
-    };
-    if (newsData.articles[3].urlToImage === undefined) {
-        newsData.articles[3].urlToImage = "-";
-    };
-    if (newsData.articles[3].author === undefined) {
-        newsData.articles[3].author = "-";
-    };
-    if (newsData.articles[3].author === null) {
-        newsData.articles[3].author = "-";
-    };
-    if (newsData.articles[3].description === undefined) {
-        newsData.articles[3].description = "-";
-    };
-    if (newsData.articles[3].url === undefined) {
-        newsData.articles[3].url = "-";
-    };
-    if (newsData.articles[6].title === undefined) {
-        newsData.articles[6].title = "-";
-    };
-    if (newsData.articles[6].urlToImage === undefined) {
-        newsData.articles[6].urlToImage = "-";
-    };
-    if (newsData.articles[6].author === undefined) {
-        newsData.articles[6].author = "-";
-    };
-    if (newsData.articles[6].description === undefined) {
-        newsData.articles[6].description = "-";
-    };
-    if (newsData.articles[6].url === undefined) {
-        newsData.articles[6].url = "-";
-    };
-    
-    $("#new-title2-3").empty();
-    $("#news-img-3").empty();
-    $("#auth-3").empty();
-    $("#desc-3").empty();
-    $("#link-3").empty();
-    $("#new-title2-3").append(`${newsData.articles[3].title}`);
-    $("#news-img-3").append(`<img id="news-cov" src="${newsData.articles[3].urlToImage}" alt="Cover image of news article." width=50% height=auto>`);
-    $("#auth-3").append(`By ${newsData.articles[3].author}`);
-    $("#desc-3").append(`${newsData.articles[3].description}`);
-    $("#link-3").append(`<a href="${newsData.articles[3].url}" target="_blank">Full article</a>`);
-    $("#new-title2-6").empty();
-    $("#news-img-6").empty();
-    $("#auth-6").empty();
-    $("#desc-6").empty();
-    $("#link-6").empty();
-    $("#new-title2-6").append(`${newsData.articles[6].title}`);
-    $("#news-img-6").append(`<img id="news-cov" src="${newsData.articles[6].urlToImage}" alt="Cover image of news article." width=50% height=auto>`);
-    $("#auth-6").append(`By ${newsData.articles[6].author}`);
-    $("#desc-6").append(`${newsData.articles[6].description}`);
-    $("#link-6").append(`<a href="${newsData.articles[6].url}" target="_blank">Full article</a>`);
-    searchSentiNews(newsData);
-}
-
-//4.4 display dictionary sentiment score in DOM
+// display dictionary sentiment score in DOM
 function displayDictSentScore(score) {
     $("#def-sen").empty();
     $("#def-sen").append(`${score}`);
 }
 
-//4.5 display poem sentiment score in DOM
+// POEM POEM POEM POEM POEM POEM POEM POEM POEM POEM POEM POEM POEM POEM POEM POEM POEM POEM POEM POEM POEM
+// add parameters to Poem endpoint
+function searchPoem(word) {
+    const poemUrl = poemEndPoint + word + "/title,author,lines.json";
+    fetchPoemApi(poemUrl);
+    poemTitle(word);
+}
+
+// fetch data from Poetry API
+function fetchPoemApi(poemUrl) {
+    fetch(poemUrl)
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error(response.statusText);
+        })
+        .then(poemData => displayPoemApi(poemData))
+        .catch(err => displayPoemApi(null));
+}
+
+// display Poem API response in DOM
+function displayPoemApi(poemData) {
+    if (poemData === null) {
+        $("#poe-title2").empty();
+        $("#poet").empty();
+        $("#poe").empty();
+        $("#poe-title2").append(`Sorry, no poems found.`);
+        $(".book-con").addClass("book-hidden");
+        searchSentiPoem(null);
+    } else {
+        //check is poem has more than one line (or more than one element in array)
+        let poetry = poemData[0].lines.join("<br>");
+
+        $("#poe-title2").empty();
+        $("#poet").empty();
+        $("#poe").empty();
+        $("#poe-title2").append(`${poemData[0].title}<br>`);
+        $("#poet").append(`By ${poemData[0].author}`);
+        $("#poe").append(poetry);
+        $(".book-con").removeClass("book-hidden");
+        searchSentiPoem(poemData);
+        searchBook(poemData[0].title);
+    }
+}
+
+// display word used to search poem in header of section
+function poemTitle(word) {
+    $("#poem-word").empty()
+    $("#poem-word").append(`<i>found by searching: ${word}</i> `);
+}
+
+// get sentiment score for poem
+function searchSentiPoem(poemData) {
+    if (poemData === null) {
+        const nullPoem = null;
+        let sentimood = new Sentimood();
+        let sentiScore = sentimood.analyze(`"${nullPoem}"`);
+        let final = (Math.round(sentiScore.score * 10) / 10).toFixed(1);
+        displayPoemSentScore(final);
+    } else {
+        const poemlines = poemData[0].lines;
+        const poem = poemlines.join();
+        let sentimood = new Sentimood();
+        let sentiScore = sentimood.analyze(`"${poem}"`);
+        let final = (Math.round(sentiScore.score * 10) / 10).toFixed(1);
+        displayPoemSentScore(final);
+    }
+}
+
+// display poem sentiment score in DOM
 function displayPoemSentScore(score) {
     $("#poem-sen").empty();
     $("#poem-sen").append(`${score}`);
 }
 
-//4.6a display news sentiment score in DOM
-function displayNewsSentScore0(score) {
-    $("#news-sen0").empty();
-    $("#news-sen0").append(`${score}`);
-    $("#news-sen0").empty();
-    $("#news-sen0").append(`${score}`);
+// BOOK BOOK BOOK BOOK BOOK BOOK BOOK BOOK BOOK BOOK BOOK BOOK BOOK BOOK BOOK BOOK BOOK BOOK BOOK BOOK BOOK
+// add parameters to Book endpoint
+function searchBook(poemTitle) {
+    const bookParams = {
+        q: poemTitle,
+        key: bookApiKey,
+    }
+
+    const bookApiKeyString = formatQueryParams(bookParams)
+    const bookUrl = bookEndPoint + "?" + bookApiKeyString;
+    fetchBookApi(bookUrl);
 }
 
-//4.6b display news sentiment score in DOM
-function displayNewsSentScore1(score) {
-    $("#news-sen1").empty();
-    $("#news-sen1").append(`${score}`);
-    $("#news-sen1").empty();
-    $("#news-sen1").append(`${score}`);
-}
-
-//4.7 display most viewed video since 2014 based on searched word
-function searchYT(word) {
-    const request = gapi.client.youtube.search.list({
-        part: "snippet",
-        q: word,
-        maxResults: 1,
-        order: "viewCount",
-        publishedAfter: "2014-01-01T00:00:00Z"
-    });
-    request.execute(function (response) {
-        let results = response.result;
-        $("#yt-container").html("");
-        $.each(results.items, function (index, item) {
-            $.get("html/item.html", function (data) {
-                $("#yt-container").append(tplawesome(data, [{"title": item.snippet.title, "videoid": item.id.videoId}]));
-            });
+// fetch data from Book API
+function fetchBookApi(bookUrl) {
+    fetch(bookUrl)
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error(response.statusText);
+        })
+        .then(bookData => displayBookApi(bookData))
+        .catch(err => {
+            $("#error-message").removeClass("hidden");
+            $("#js-error-message").text(`Something went wrong with the Book API: ${err.message}`);
         });
-    });
 }
 
-//4.8 display Book cover, title, author, and link to buy in DOM
+// display Book cover, title, author, and link to buy in DOM
 function displayBookApi(bookData) {
-    console.log("book data", bookData);
-    if (bookData.items[0].volumeInfo.imageLinks.thumbnail === undefined) {
-        bookData.items[0].volumeInfo.imageLinks.thumbnail = "-";
-    };
-    if (bookData.items[0].volumeInfo.title === undefined) {
-        bookData.items[0].volumeInfo.title = "-";
-    };
-    if (bookData.items[0].volumeInfo.authors[0] === undefined) {
-        bookData.items[0].volumeInfo.authors[0] = "-";
-    };
-    if (bookData.items[0].saleInfo.buyLink === undefined) {
-        bookData.items[0].saleInfo.buyLink = "-";
-    };
-    
-    $(".book-cover").empty();
-    $(".book-cover").append(`<b>Poem found in:</b><br>
-    <img class="book-border" src="${bookData.items[0].volumeInfo.imageLinks.thumbnail}"><br><br>
+    console.log("displayBookApi", bookData)
+    $("#book-cover").empty();
+    if (bookData.items[0].volumeInfo.imageLinks.thumbnail === null) {
+        $("#book-cover").append(`<br><br><img class="book-border" src="Sorry, no book cover found."><br><br>
+        ${bookData.items[0].volumeInfo.title}<br>
+        By ${bookData.items[0].volumeInfo.authors[0]}<br><br>
+        <a id="buy" href="${bookData.items[0].saleInfo.buyLink}" target="_blank">Buy/View</a>`);
+    } else if (bookData.items[0].volumeInfo.title === null) {
+        $("#book-cover").append(`<br>Sorry, no book found.`)
+    } else { $("#book-cover").append(`<br><br><img class="book-border" src="${bookData.items[0].volumeInfo.imageLinks.thumbnail}"><br><br>
     ${bookData.items[0].volumeInfo.title}<br>
     By ${bookData.items[0].volumeInfo.authors[0]}<br><br>
     <a id="buy" href="${bookData.items[0].saleInfo.buyLink}" target="_blank">Buy/View</a>`);
+    }
 }
 
-//5.1 parse data and extract sentiment score for definition from sentimood.js
-function searchSentiDict(dictData) {
-    const def0 = dictData[0].shortdef[0];
-    const def1 = dictData[0].shortdef[1];
-    const def2 = dictData[0].shortdef[2];
-    let sentimood0 = new Sentimood();
-    let sentimood1 = new Sentimood();
-    let sentimood2 = new Sentimood();
-    let senti0 = sentimood0.analyze(`"${def0}"`);
-    let senti1 = sentimood1.analyze(`"${def1}"`);
-    let senti2 = sentimood2.analyze(`"${def2}"`);
-    let senAvg = (senti0.score +
-        senti1.score +
-        senti2.score) / 3
-    let final = (Math.round(senAvg * 10) / 10).toFixed(1);
-    displayDictSentScore(final);
+// LYRICS LYRICS LYRICS LYRICS LYRICS LYRICS LYRICS LYRICS LYRICS LYRICS LYRICS LYRICS LYRICS LYRICS LYRICS
+// write endpoint URL + parameters for lyrics IDs
+function searchLyricsId(word) {
+    const lyricsParams = {
+        q: word,
+        limit: 50,
+        apikey: lyricsApiKey
+    };
+
+    const lyricsApiKeyString = formatQueryParams(lyricsParams)
+    const lyricsIdUrl = lyricsIdEndPoint + "?" + lyricsApiKeyString;
+    fetchLyricsIdApi(lyricsIdUrl);
+    lyricsTitle(word);
 }
 
-//5.2 parse data and extract sentiment score for poem from sentimood.js
-function searchSentiPoem(poemData) {
-    const poemlines = poemData[0].lines;
-    const poem = poemlines.join();
-    let sentimood = new Sentimood();
-    let sentiScore = sentimood.analyze(`"${poem}"`);
-    let final = (Math.round(sentiScore.score * 10) / 10).toFixed(1);
-    displayPoemSentScore(final);
+// fetch lyrics IDs from Lyrics API
+function fetchLyricsIdApi(lyricsIdUrl) {
+    fetch(lyricsIdUrl)
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error(response.statusText);
+        })
+        .then(lyricsData => parseLyricsApi(lyricsData));
 }
 
-//5.3 parse data and extract sentiment score for poem from sentimood.js
-function searchSentiNews(newsData) {
-    const art0 = newsData.articles[3].description;
-    const art1 = newsData.articles[6].description;
-    let sentimood0 = new Sentimood();
-    let sentimood1 = new Sentimood();
-    let sentiScore0 = sentimood0.analyze(`"${art0}"`);
-    let sentiScore1 = sentimood1.analyze(`"${art1}"`);
-    let final0 = (Math.round(sentiScore0.score * 10) / 10).toFixed(1);
-    let final1 = (Math.round(sentiScore1.score * 10) / 10).toFixed(1);
-    displayNewsSentScore0(final0);
-    displayNewsSentScore1(final1);
+// determine if any songs were found in the response
+function parseLyricsApi(lyricsData) {
+    if (lyricsData.length != 0) {
+        findHasLyrics(lyricsData);
+    } else {
+        displayLyricsApi(null);
+    };
 }
 
-//1a add parameters to Word endpoint
+// if songs were found, format query to make
+// another API request to get lyrics from IDs
+// if no songs were found, pass null to displayLyricsAPI()
+function findHasLyrics(lyricsData) {
+    let data = lyricsData.result.filter(f => f.haslyrics)
+    if (data.length != 0) {
+        formatQueryLyrics(data);
+    } else {
+        displayLyricsApi(null);
+    };
+}
+
+// format query for lyrics and fetch lyrics
+function formatQueryLyrics(res) {
+    let artistId = res[0].id_artist
+    let albumId = res[0].id_album
+    let trackId = res[0].id_track
+
+    const lyricsParams = {
+        artists: artistId,
+        albums: albumId,
+        tracks: trackId,
+    };
+
+    const lyricsApiParams = formatQueryParamsLyrics(lyricsParams)
+    const lyricsUrl = lyricsEndPoint + lyricsApiParams + "/"+ "lyrics?apikey=" + lyricsApiKey;
+    fetchLyricsApi(lyricsUrl);
+}
+
+// query formatter
+function formatQueryParamsLyrics(params) {
+    const queryItems = Object.keys(params)
+        .map(key => `${encodeURIComponent(key)}/${encodeURIComponent(params[key])}`);
+    return queryItems.join("/");
+}
+
+// fetch lyrics
+function fetchLyricsApi(lyricsUrl) {
+    fetch(lyricsUrl)
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error(response.statusText);
+        })
+        .then(lyricsData => displayLyricsApi(lyricsData));
+}
+
+// display lyrics
+// if lyrics = null then show message
+// if lyrics != null then show track, artist, and lyrics
+function displayLyricsApi(lyricsData) {
+    if (lyricsData === null) {
+        $("#lyr-title2").empty();
+        $("#artist").empty();
+        $("#lyr").empty();
+        $("#lyr-title2").append(`Sorry, no lyrics found.`);
+        $(".text").remove("#artist");
+        searchSentiLyrics(null);
+        searchYT(null);
+    } else {
+        let lyr = lyricsData.result.lyrics;
+        const newLyr = lyr.replace(/\n/g, "<br>");        
+        $("#lyr-title2").empty();
+        $("#artist").empty();
+        $("#lyr").empty();
+        $("#lyr-title2").append(`${lyricsData.result.track}<br>`);
+        $("#artist").append(`By ${lyricsData.result.artist}`);
+        $("#lyr").append(newLyr);
+        $(".lyr-con").removeClass("hidden");
+        searchSentiLyrics(newLyr);
+        let search = `"${lyricsData.result.track} ${lyricsData.result.artist}"`;
+        searchYT(search);
+    }
+}
+
+// display word used to search lyrics next to header of section
+function lyricsTitle(word) {
+    $("#lyrics-word").empty()
+    $("#lyrics-word").append(`<i>found by searching: ${word}</i> `);
+}
+
+// get sentiment score of lyrics
+function searchSentiLyrics(hasLyrics) {
+    if (hasLyrics === null) {
+        let nullLyrics = null;
+        let sentimood = new Sentimood();
+        let sentiScore = sentimood.analyze(`"${nullLyrics}"`);
+        let final = (Math.round(sentiScore.score * 10) / 10).toFixed(1);
+        displayLyricsSentScore(final);
+    } else {
+        let sentimood = new Sentimood();
+        let sentiScore = sentimood.analyze(`"${hasLyrics}"`);
+        let final = (Math.round(sentiScore.score * 10) / 10).toFixed(1);
+        displayLyricsSentScore(final);
+    }
+}
+
+// show sentiment score of lyrics in DOM
+function displayLyricsSentScore(score) {
+    $("#lyr-sen").empty();
+    $("#lyr-sen").append(`${score}`);
+}
+
+// YOUTUBE YOUTUBE YOUTUBE YOUTUBE YOUTUBE YOUTUBE YOUTUBE YOUTUBE YOUTUBE YOUTUBE YOUTUBE YOUTUBE
+// fetch data from YouTube API
+function initYT() {
+    gapi.client.setApiKey(ytApiKey);
+    gapi.client.load("youtube", "v3", function () {
+    });
+}
+
+// add parameters to YouTube endpoint
+// then display most viewed video since 2014 based on artist and lyrics
+function searchYT(word) {
+    if (word === null) {
+        $("#yt-container").empty()
+        $("#yt-container").append("Since no lyrics were found. No videos were found.")
+    } else {
+        const request = gapi.client.youtube.search.list({
+            part: "snippet",
+            q: word,
+            maxResults: 1,
+            order: "viewCount",
+            publishedAfter: "2014-01-01T00:00:00Z"
+        });
+        request.execute(function (response) {
+            let results = response.result;
+            $("#yt-container").html("");
+            $.each(results.items, function (index, item) {
+                $.get("html/item.html", function (data) {
+                    $(".from-lyrics").empty()
+                    $(".video-title").append(`<span id="video-word"> <i>found by searching ${word}</i></span>`)
+                    $("#yt-container").append(tplawesome(data, [{ "title": item.snippet.title, "videoid": item.id.videoId }]));
+                });
+            });
+        });
+    }
+}
+
+// WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD
+// add parameters to Word endpoint
 function watchButton() {
     $("form").submit(event => {
         event.preventDefault();
-    
+
         const wordParams = {
             hasDictionaryDef: "true",
             maxCorpusCount: -1,
@@ -427,14 +426,14 @@ function watchButton() {
             maxLength: -1,
             api_key: wordApiKey,
         }
-        
+
         const wordApiKeyString = formatQueryParams(wordParams)
         const wordUrl = wordEndPoint + "?" + wordApiKeyString;
         fetchWordApi(wordUrl);
     });
 }
 
-//1b fetch data from Word API
+// fetch data from Word API
 function fetchWordApi(wordUrl) {
     fetch(wordUrl)
         .then(response => {
@@ -444,16 +443,15 @@ function fetchWordApi(wordUrl) {
             throw new Error(response.statusText);
         })
         .then(wordData => randomWord(wordData))
-    //    .catch(err => {
-    //        $("#error-message").removeClass("hidden");
-    //        $("#js-error-message").text(`Something went wrong with the News API: ${err.message}`);
-    //    });
+        .catch(err => {
+            $("#error-message").removeClass("hidden");
+            $("#js-error-message").text(`Something went wrong with the Word API: ${err.message}. Try again in a few minutes.`);
+        });
 }
 
-//1c push the random word into all the other functions
+// push the random word into all the other functions
 function randomWord(wordData) {
     let word = wordData.word
-    console.log("word", word);
     $("#container-index").hide();
     searchWord(word);
 }
