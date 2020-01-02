@@ -141,6 +141,8 @@ function displayPoemApi(poemData) {
         $("#poe").empty();
         $("#poe-title2").append(`Sorry, no poems found.`);
         $(".book-con").addClass("book-hidden");
+        $(".more").addClass("hidden");
+        $(".less").addClass("hidden");
         searchSentiPoem(null);
     } else {
         //check is poem has more than one line (or more than one element in array)
@@ -153,6 +155,8 @@ function displayPoemApi(poemData) {
         $("#poet").append(`By ${poemData[0].author}`);
         $("#poe").append(poetry);
         $(".book-con").removeClass("book-hidden");
+        $(".more").removeClass("hidden");
+        $(".less").removeClass("hidden");
         searchSentiPoem(poemData);
         searchBook(poemData[0].title);
     }
@@ -219,19 +223,15 @@ function fetchBookApi(bookUrl) {
 
 // display Book cover, title, author, and link to buy in DOM
 function displayBookApi(bookData) {
-    console.log("displayBookApi", bookData)
     $("#book-cover").empty();
     if (bookData.items[0].volumeInfo.imageLinks.thumbnail === null) {
-        console.log("null cover image", bookData.items[0].volumeInfo.imageLinks.thumbnail)
         $("#book-cover").append(`<br><br><img class="book-border" src="Sorry, no book cover found."><br><br>
         ${bookData.items[0].volumeInfo.title}<br>
         By ${bookData.items[0].volumeInfo.authors[0]}<br><br>
         <a id="buy" href="${bookData.items[0].saleInfo.buyLink}" target="_blank">Buy/View</a>`);
     } else if (bookData.items[0].volumeInfo.title === null) {
-        console.log("null book title", bookData.items[0].volumeInfo.title)
         $("#book-cover").append(`<br>Sorry, no book found.`)
     } else {
-        console.log("book info available", bookData.items[0].volumeInfo.imageLinks.thumbnail)
         $("#book-cover").append(`<br><br><img class="book-border" src="${bookData.items[0].volumeInfo.imageLinks.thumbnail}"><br><br>
         ${bookData.items[0].volumeInfo.title}<br>
         By ${bookData.items[0].volumeInfo.authors[0]}<br><br>

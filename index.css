@@ -144,6 +144,21 @@ h2 {
   color: #9e9e9e;
 }
 
+/* poem 'show more' */
+.fulltext p, .less {
+	display: none;
+}
+
+/* poem 'show more' */
+.fulltext:target p, .fulltext:target .less {
+	display: block;
+}
+
+/* poem 'show more' */
+.fulltext:target .more {
+	display: none;
+}
+
 #lyrics-word {
   color: #9e9e9e;
 }
