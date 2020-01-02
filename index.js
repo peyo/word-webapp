@@ -61,7 +61,7 @@ function fetchDictApi(dictUrl) {
         .then(dictData => displayDictApi(dictData))
         .catch(err => {
             $("#error-message").removeClass("hidden");
-            $("#js-error-message").text(`Something went wrong with the Dictionary API: ${err.message}`);
+            $("#js-error-message").text(`Something went wrong. Try again in a few minutes.`);
         });
 }
 
@@ -213,7 +213,7 @@ function fetchBookApi(bookUrl) {
         .then(bookData => displayBookApi(bookData))
         .catch(err => {
             $("#error-message").removeClass("hidden");
-            $("#js-error-message").text(`Something went wrong with the Book API: ${err.message}`);
+            $("#js-error-message").text(`Something went wrong. Try again in a few minutes.`);
         });
 }
 
@@ -222,16 +222,20 @@ function displayBookApi(bookData) {
     console.log("displayBookApi", bookData)
     $("#book-cover").empty();
     if (bookData.items[0].volumeInfo.imageLinks.thumbnail === null) {
+        console.log("null cover image", bookData.items[0].volumeInfo.imageLinks.thumbnail)
         $("#book-cover").append(`<br><br><img class="book-border" src="Sorry, no book cover found."><br><br>
         ${bookData.items[0].volumeInfo.title}<br>
         By ${bookData.items[0].volumeInfo.authors[0]}<br><br>
         <a id="buy" href="${bookData.items[0].saleInfo.buyLink}" target="_blank">Buy/View</a>`);
     } else if (bookData.items[0].volumeInfo.title === null) {
+        console.log("null book title", bookData.items[0].volumeInfo.title)
         $("#book-cover").append(`<br>Sorry, no book found.`)
-    } else { $("#book-cover").append(`<br><br><img class="book-border" src="${bookData.items[0].volumeInfo.imageLinks.thumbnail}"><br><br>
-    ${bookData.items[0].volumeInfo.title}<br>
-    By ${bookData.items[0].volumeInfo.authors[0]}<br><br>
-    <a id="buy" href="${bookData.items[0].saleInfo.buyLink}" target="_blank">Buy/View</a>`);
+    } else {
+        console.log("book info available", bookData.items[0].volumeInfo.imageLinks.thumbnail)
+        $("#book-cover").append(`<br><br><img class="book-border" src="${bookData.items[0].volumeInfo.imageLinks.thumbnail}"><br><br>
+        ${bookData.items[0].volumeInfo.title}<br>
+        By ${bookData.items[0].volumeInfo.authors[0]}<br><br>
+        <a id="buy" href="${bookData.items[0].saleInfo.buyLink}" target="_blank">Buy/View</a>`);
     }
 }
 
@@ -402,7 +406,7 @@ function searchYT(word) {
             $("#yt-container").html("");
             $.each(results.items, function (index, item) {
                 $.get("html/item.html", function (data) {
-                    $(".from-lyrics").empty()
+                    $("#video-word").empty()
                     $(".video-title").append(`<span id="video-word"> <i>found by searching ${word}</i></span>`)
                     $("#yt-container").append(tplawesome(data, [{ "title": item.snippet.title, "videoid": item.id.videoId }]));
                 });
@@ -445,7 +449,7 @@ function fetchWordApi(wordUrl) {
         .then(wordData => randomWord(wordData))
         .catch(err => {
             $("#error-message").removeClass("hidden");
-            $("#js-error-message").text(`Something went wrong with the Word API: ${err.message}. Try again in a few minutes.`);
+            $("#js-error-message").text(`Something went wrong. Try again in a few minutes.`);
         });
 }
 

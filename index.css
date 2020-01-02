@@ -2,11 +2,19 @@
 * {
   box-sizing: border-box;
 }
+
+h1, .poem, #def-title, #poe-title, #book-title, #lyr-title, #video-title, #beginning {
+  font-family: 'Courier', serif;
+}
   
 body {
   font-family: 'Helvetica', sans-serif;
   color: #606060;
   font-weight: 349;
+}
+
+#def-sent-title, #poem-sent-title, #lyr-sent-title, .video-title {
+  font-size: medium;
 }
 
 h1 {
@@ -44,6 +52,15 @@ i.fa {
   justify-content: center;
   align-items: center;
   height: 100vh;
+}
+
+h2 {
+  text-align: center;  
+  width: 51%;
+  margin: 0 auto;
+  font-weight: 300;
+  font-size:  medium;
+  margin-bottom: 9px;
 }
 
 .button-container-index {
@@ -167,14 +184,15 @@ i.fa {
   font-weight: 500;
 }
 
-.yt-container {
+#yt-container {
   position: relative;
   padding-bottom: 56.25%;
   height: 0;
   overflow: hidden;
-  max-width: 100%; }
+  max-width: 1000px;
+}
 
-.yt-container iframe, .yt-container object, .yt-container embed {
+#yt-container iframe, .yt-container object, .yt-container embed {
   position: absolute;
   top: 0;
   left: 0;
@@ -213,6 +231,12 @@ i.fa {
 
   .book-cover:last-of-type {
     margin: 0;
+  }
+
+  .title {
+    font-size: large;
+    font-weight: 540;
+    margin: 0 0 18px 0;
   }
 }
 /* end - result.html */
