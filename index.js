@@ -1,11 +1,11 @@
 "use strict";
 
 // API keys and endpoints
-const wordApiKey = "API KEY";
-const sentiApiKey = "API KEY";
-const ytApiKey = "API KEY";
-const bookApiKey = "API KEY";
-const lyricsApiKey = "API KEY";
+const wordApiKey = "m2vinpl4rdeeur4aw73brwq1b91d53c8awznzo59nkli8ccbw";
+const sentiApiKey = "AIzaSyBTvtLY_gZV6NpwJJTNHScZxC1ta6vNsQM";
+const ytApiKey = "AIzaSyBbbEPhvZiZV8jHTJdgfviDU1ABN6W-UBw";
+const bookApiKey = "AIzaSyBiEL2F_VV6f1BRNPNkjsC0kIUvjCvWuAA";
+const lyricsApiKey = "5d00f2fGlDaYcqaVdSbilkr3WSgRRNdwIkG5H3jgABG7Ko0qrDf7zOZP";
 
 const wordEndPoint = "https://api.wordnik.com/v4/words.json/randomWord";
 const dictEndPoint = "https://api.wordnik.com/v4/word.json/";
