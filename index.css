@@ -144,17 +144,17 @@ h2 {
   color: #9e9e9e;
 }
 
-/* poem 'show more' */
-.fulltext p, .less {
+/* poem & lyrics 'show more/show less' */
+.fulltext span, .less {
 	display: none;
 }
 
-/* poem 'show more' */
-.fulltext:target p, .fulltext:target .less {
+/* poem & lyrics 'show more/show less' */
+.fulltext:target span, .fulltext:target .less {
 	display: block;
 }
 
-/* poem 'show more' */
+/* poem & lyrics 'show more/show less' */
 .fulltext:target .more {
 	display: none;
 }
