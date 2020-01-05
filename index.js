@@ -1,19 +1,19 @@
 "use strict";
 
 // API keys and endpoints
-const wordApiKey = "m2vinpl4rdeeur4aw73brwq1b91d53c8awznzo59nkli8ccbw";
-const sentiApiKey = "AIzaSyBTvtLY_gZV6NpwJJTNHScZxC1ta6vNsQM";
-const ytApiKey = "AIzaSyBbbEPhvZiZV8jHTJdgfviDU1ABN6W-UBw";
-const bookApiKey = "AIzaSyBiEL2F_VV6f1BRNPNkjsC0kIUvjCvWuAA";
-const lyricsApiKey = "5d00f2fGlDaYcqaVdSbilkr3WSgRRNdwIkG5H3jgABG7Ko0qrDf7zOZP";
+const wordApiKey = 'm2vinpl4rdeeur4aw73brwq1b91d53c8awznzo59nkli8ccbw';
+const sentiApiKey = 'AIzaSyBTvtLY_gZV6NpwJJTNHScZxC1ta6vNsQM';
+const ytApiKey = 'AIzaSyBbbEPhvZiZV8jHTJdgfviDU1ABN6W-UBw';
+const bookApiKey = 'AIzaSyBiEL2F_VV6f1BRNPNkjsC0kIUvjCvWuAA';
+const lyricsApiKey = '5d00f2fGlDaYcqaVdSbilkr3WSgRRNdwIkG5H3jgABG7Ko0qrDf7zOZP';
 
-const wordEndPoint = "https://api.wordnik.com/v4/words.json/randomWord";
-const dictEndPoint = "https://api.wordnik.com/v4/word.json/";
-const poemEndPoint = "http://poetrydb.org/lines/";
-const sentiAnEndPoint = "https://language.googleapis.com/v1/documents:analyzeSentiment";
-const bookEndPoint = "https://www.googleapis.com/books/v1/volumes";
-const lyricsIdEndPoint = "https://api.happi.dev/v1/music";
-const lyricsEndPoint = "https://api.happi.dev/v1/music/";
+const wordEndPoint = 'https://api.wordnik.com/v4/words.json/randomWord';
+const dictEndPoint = 'https://api.wordnik.com/v4/word.json/';
+const poemEndPoint = 'http://poetrydb.org/lines/';
+const sentiAnEndPoint = 'https://language.googleapis.com/v1/documents:analyzeSentiment';
+const bookEndPoint = 'https://www.googleapis.com/books/v1/volumes';
+const lyricsIdEndPoint = 'https://api.happi.dev/v1/music';
+const lyricsEndPoint = 'https://api.happi.dev/v1/music/';
 
 // template engine for taking in title and video id for YT used in 2.5. https://github.com/FriesFlorian/tplawesome
 function tplawesome(e, t) {
@@ -30,7 +30,7 @@ function tplawesome(e, t) {
 function formatQueryParams(params) {
     const queryItems = Object.keys(params)
         .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`);
-    return queryItems.join("&");
+    return queryItems.join('&');
 }
 
 // DICTIONARY DICTIONARY DICTIONARY DICTIONARY DICTIONARY DICTIONARY DICTIONARY DICTIONARY DICTIONARY
@@ -45,7 +45,7 @@ function searchWord(word) {
     };
 
     const dictApiKeyString = formatQueryParams(dictParams)
-    const dictUrl = dictEndPoint + word + "/definitions?" + dictApiKeyString;
+    const dictUrl = dictEndPoint + word + '/definitions?' + dictApiKeyString;
     fetchDictApi(dictUrl);
 }
 
@@ -298,7 +298,7 @@ function formatQueryLyrics(res) {
     };
 
     const lyricsApiParams = formatQueryParamsLyrics(lyricsParams)
-    const lyricsUrl = lyricsEndPoint + lyricsApiParams + "/"+ "lyrics?apikey=" + lyricsApiKey;
+    const lyricsUrl = lyricsEndPoint + lyricsApiParams + '/' + 'lyrics?apikey=' + lyricsApiKey;
     fetchLyricsApi(lyricsUrl);
 }
 
@@ -306,7 +306,7 @@ function formatQueryLyrics(res) {
 function formatQueryParamsLyrics(params) {
     const queryItems = Object.keys(params)
         .map(key => `${encodeURIComponent(key)}/${encodeURIComponent(params[key])}`);
-    return queryItems.join("/");
+    return queryItems.join('/');
 }
 
 // fetch lyrics
@@ -389,14 +389,14 @@ function initYT() {
 function searchYT(word) {
     if (word === null) {
         $("#yt-container").empty()
-        $("#yt-container").append("Since no lyrics were found. No videos were found.")
+        $("#yt-container").append('Since no lyrics were found. No videos were found.')
     } else {
         const request = gapi.client.youtube.search.list({
-            part: "snippet",
+            part: 'snippet',
             q: word,
             maxResults: 1,
-            order: "viewCount",
-            publishedAfter: "2014-01-01T00:00:00Z"
+            order: 'viewCount',
+            publishedAfter: '2014-01-01T00:00:00Z'
         });
         request.execute(function (response) {
             let results = response.result;
@@ -429,7 +429,7 @@ function watchButton() {
         }
 
         const wordApiKeyString = formatQueryParams(wordParams)
-        const wordUrl = wordEndPoint + "?" + wordApiKeyString;
+        const wordUrl = wordEndPoint + '?' + wordApiKeyString;
         fetchWordApi(wordUrl);
     });
 }
