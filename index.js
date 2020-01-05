@@ -99,9 +99,8 @@ function displayDictApi(dictData) {
 
 // get dictionary sentiment score
 function searchSentiDict(dictData) {
-    const def = dictData[0].text;
     let sentimood = new Sentimood();
-    let senti = sentimood.analyze(`"${def}"`);
+    let senti = sentimood.analyze(`"${dictData[0].text}"`);
     let final = (Math.round(senti.score * 10) / 10).toFixed(1);
     displayDictSentScore(final);
 }
@@ -171,9 +170,8 @@ function poemTitle(word) {
 // get sentiment score for poem
 function searchSentiPoem(poemData) {
     if (poemData === null) {
-        const nullPoem = null;
         let sentimood = new Sentimood();
-        let sentiScore = sentimood.analyze(`"${nullPoem}"`);
+        let sentiScore = sentimood.analyze(`"${poemData}"`);
         let final = (Math.round(sentiScore.score * 10) / 10).toFixed(1);
         displayPoemSentScore(final);
     } else {
@@ -360,9 +358,8 @@ function lyricsTitle(word) {
 // get sentiment score of lyrics
 function searchSentiLyrics(hasLyrics) {
     if (hasLyrics === null) {
-        let nullLyrics = null;
         let sentimood = new Sentimood();
-        let sentiScore = sentimood.analyze(`"${nullLyrics}"`);
+        let sentiScore = sentimood.analyze(`"${hasLyrics}"`);
         let final = (Math.round(sentiScore.score * 10) / 10).toFixed(1);
         displayLyricsSentScore(final);
     } else {
