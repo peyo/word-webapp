@@ -298,7 +298,7 @@ function formatQueryLyrics(res) {
     };
 
     const lyricsApiParams = formatQueryParamsLyrics(lyricsParams)
-    const lyricsUrl = `${lyricsEndPoint}${lyricsApiParams}/lyrics?${apikey}=${lyricsApiKey}`;
+    const lyricsUrl = `${lyricsEndPoint}${lyricsApiParams}/lyrics?apikey=${lyricsApiKey}`;
     fetchLyricsApi(lyricsUrl);
 }
 
