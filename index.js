@@ -45,7 +45,7 @@ function searchWord(word) {
     };
 
     const dictApiKeyString = formatQueryParams(dictParams)
-    const dictUrl = `${dictEndPoint}${word}/${definitions}?${dictApiKeyString}`;
+    const dictUrl = `${dictEndPoint}${word}/definitions?${dictApiKeyString}`;
     fetchDictApi(dictUrl);
 }
 
