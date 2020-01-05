@@ -45,7 +45,7 @@ function searchWord(word) {
     };
 
     const dictApiKeyString = formatQueryParams(dictParams)
-    const dictUrl = dictEndPoint + word + '/definitions?' + dictApiKeyString;
+    const dictUrl = `${dictEndPoint}${word}/${definitions}?${dictApiKeyString}`;
     fetchDictApi(dictUrl);
 }
 
@@ -114,7 +114,7 @@ function displayDictSentScore(score) {
 // POEM POEM POEM POEM POEM POEM POEM POEM POEM POEM POEM POEM POEM POEM POEM POEM POEM POEM POEM POEM POEM
 // add parameters to Poem endpoint
 function searchPoem(word) {
-    const poemUrl = poemEndPoint + word + "/title,author,lines.json";
+    const poemUrl = `${poemEndPoint}${word}/title,author,lines.json`;
     fetchPoemApi(poemUrl);
     poemTitle(word);
 }
@@ -247,7 +247,7 @@ function searchLyricsId(word) {
     };
 
     const lyricsApiKeyString = formatQueryParams(lyricsParams)
-    const lyricsIdUrl = lyricsIdEndPoint + "?" + lyricsApiKeyString;
+    const lyricsIdUrl = `${lyricsIdEndPoint}?${lyricsApiKeyString}`;
     fetchLyricsIdApi(lyricsIdUrl);
     lyricsTitle(word);
 }
@@ -298,7 +298,7 @@ function formatQueryLyrics(res) {
     };
 
     const lyricsApiParams = formatQueryParamsLyrics(lyricsParams)
-    const lyricsUrl = lyricsEndPoint + lyricsApiParams + '/' + 'lyrics?apikey=' + lyricsApiKey;
+    const lyricsUrl = `${lyricsEndPoint}${lyricsApiParams}/${lyrics}?${apikey}=${lyricsApiKey}`;
     fetchLyricsApi(lyricsUrl);
 }
 
@@ -429,7 +429,7 @@ function watchButton() {
         }
 
         const wordApiKeyString = formatQueryParams(wordParams)
-        const wordUrl = wordEndPoint + '?' + wordApiKeyString;
+        const wordUrl = `${wordEndPoint}?${wordApiKeyString}`;
         fetchWordApi(wordUrl);
     });
 }
