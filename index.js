@@ -135,27 +135,27 @@ function fetchPoemApi(poemUrl) {
 // display Poem API response in DOM
 function displayPoemApi(poemData) {
     if (poemData === null) {
-        $("#poe-title2").empty();
-        $("#poet").empty();
-        $("#poe").empty();
-        $("#poe-title2").append(`Sorry, no poems found.`);
-        $(".book-con").addClass("book-hidden");
-        $(".more").addClass("hidden");
-        $(".less").addClass("hidden");
+        $('#poe-title2').empty();
+        $('#poet').empty();
+        $('#poe').empty();
+        $('#poe-title2').append(`Sorry, no poems found.`);
+        $('.book-con').addClass('book-hidden');
+        $('.more').addClass('hidden');
+        $('.less').addClass('hidden');
         searchSentiPoem(null);
     } else {
         //check is poem has more than one line (or more than one element in array)
-        let poetry = poemData[0].lines.join("<br>");
+        let poetry = poemData[0].lines.join('<br>');
 
-        $("#poe-title2").empty();
-        $("#poet").empty();
-        $("#poe").empty();
-        $("#poe-title2").append(`${poemData[0].title}<br>`);
-        $("#poet").append(`By ${poemData[0].author}`);
-        $("#poe").append(poetry);
-        $(".book-con").removeClass("book-hidden");
-        $(".more").removeClass("hidden");
-        $(".less").removeClass("hidden");
+        $('#poe-title2').empty();
+        $('#poet').empty();
+        $('#poe').empty();
+        $('#poe-title2').append(`${poemData[0].title}<br>`);
+        $('#poet').append(`By ${poemData[0].author}`);
+        $('#poe').append(poetry);
+        $('.book-con').removeClass('book-hidden');
+        $('.more').removeClass('hidden');
+        $('.less').removeClass('hidden');
         searchSentiPoem(poemData);
         searchBook(poemData[0].title);
     }
@@ -163,22 +163,22 @@ function displayPoemApi(poemData) {
 
 // display word used to search poem in header of section
 function poemTitle(word) {
-    $("#poem-word").empty()
-    $("#poem-word").append(`<i>found by searching: ${word}</i> `);
+    $('#poem-word').empty()
+    $('#poem-word').append(`<i>found by searching: ${word}</i> `);
 }
 
 // get sentiment score for poem
 function searchSentiPoem(poemData) {
     if (poemData === null) {
         let sentimood = new Sentimood();
-        let sentiScore = sentimood.analyze(`"${poemData}"`);
+        let sentiScore = sentimood.analyze(`'${poemData}'`);
         let final = (Math.round(sentiScore.score * 10) / 10).toFixed(1);
         displayPoemSentScore(final);
     } else {
         const poemlines = poemData[0].lines;
         const poem = poemlines.join();
         let sentimood = new Sentimood();
-        let sentiScore = sentimood.analyze(`"${poem}"`);
+        let sentiScore = sentimood.analyze(`'${poem}'`);
         let final = (Math.round(sentiScore.score * 10) / 10).toFixed(1);
         displayPoemSentScore(final);
     }
@@ -186,8 +186,8 @@ function searchSentiPoem(poemData) {
 
 // display poem sentiment score in DOM
 function displayPoemSentScore(score) {
-    $("#poem-sen").empty();
-    $("#poem-sen").append(`${score}`);
+    $('#poem-sen').empty();
+    $('#poem-sen').append(`${score}`);
 }
 
 // BOOK BOOK BOOK BOOK BOOK BOOK BOOK BOOK BOOK BOOK BOOK BOOK BOOK BOOK BOOK BOOK BOOK BOOK BOOK BOOK BOOK
@@ -199,7 +199,7 @@ function searchBook(poemTitle) {
     }
 
     const bookApiKeyString = formatQueryParams(bookParams)
-    const bookUrl = bookEndPoint + "?" + bookApiKeyString;
+    const bookUrl = bookEndPoint + '?' + bookApiKeyString;
     fetchBookApi(bookUrl);
 }
 
@@ -214,23 +214,23 @@ function fetchBookApi(bookUrl) {
         })
         .then(bookData => displayBookApi(bookData))
         .catch(err => {
-            $("#error-message").removeClass("hidden");
-            $("#js-error-message").text(`Something went wrong. Try again in a few minutes.`);
+            $('#error-message').removeClass('hidden');
+            $('#js-error-message').text(`Something went wrong. Try again in a few minutes.`);
         });
 }
 
 // display Book cover, title, author, and link to buy in DOM
 function displayBookApi(bookData) {
-    $("#book-cover").empty();
+    $('#book-cover').empty();
     if (bookData.items[0].volumeInfo.imageLinks.thumbnail === null) {
-        $("#book-cover").append(`<br><br><img class="book-border" src="Sorry, no book cover found."><br><br>
+        $('#book-cover').append(`<br><br>Sorry, no book cover found.<br><br>
         ${bookData.items[0].volumeInfo.title}<br>
         By ${bookData.items[0].volumeInfo.authors[0]}<br><br>
         <a id="buy" href="${bookData.items[0].saleInfo.buyLink}" target="_blank">Buy/View</a>`);
     } else if (bookData.items[0].volumeInfo.title === null) {
-        $("#book-cover").append(`<br>Sorry, no book found.`)
+        $('#book-cover').append(`<br>Sorry, no book found.`)
     } else {
-        $("#book-cover").append(`<br><br><img class="book-border" src="${bookData.items[0].volumeInfo.imageLinks.thumbnail}"><br><br>
+        $('#book-cover').append(`<br><br><img class="book-border" src="${bookData.items[0].volumeInfo.imageLinks.thumbnail}"><br><br>
         ${bookData.items[0].volumeInfo.title}<br>
         By ${bookData.items[0].volumeInfo.authors[0]}<br><br>
         <a id="buy" href="${bookData.items[0].saleInfo.buyLink}" target="_blank">Buy/View</a>`);
@@ -298,7 +298,7 @@ function formatQueryLyrics(res) {
     };
 
     const lyricsApiParams = formatQueryParamsLyrics(lyricsParams)
-    const lyricsUrl = `${lyricsEndPoint}${lyricsApiParams}/${lyrics}?${apikey}=${lyricsApiKey}`;
+    const lyricsUrl = `${lyricsEndPoint}${lyricsApiParams}/lyrics?${apikey}=${lyricsApiKey}`;
     fetchLyricsApi(lyricsUrl);
 }
 
@@ -326,33 +326,33 @@ function fetchLyricsApi(lyricsUrl) {
 // if lyrics != null then show track, artist, and lyrics
 function displayLyricsApi(lyricsData) {
     if (lyricsData === null) {
-        $("#lyr-title2").empty();
-        $("#artist").empty();
-        $("#lyr").empty();
-        $("#lyr-title2").append(`Sorry, no lyrics found.`);
-        $(".text").remove("#artist");
+        $('#lyr-title2').empty();
+        $('#artist').empty();
+        $('#lyr').empty();
+        $('#lyr-title2').append(`Sorry, no lyrics found.`);
+        $('.text').remove("#artist");
         searchSentiLyrics(null);
         searchYT(null);
     } else {
         let lyr = lyricsData.result.lyrics;
-        const newLyr = lyr.replace(/\n/g, "<br>");        
-        $("#lyr-title2").empty();
-        $("#artist").empty();
-        $("#lyr").empty();
-        $("#lyr-title2").append(`${lyricsData.result.track}<br>`);
-        $("#artist").append(`By ${lyricsData.result.artist}`);
-        $("#lyr").append(newLyr);
-        $(".lyr-con").removeClass("hidden");
+        const newLyr = lyr.replace(/\n/g, '<br>');        
+        $('#lyr-title2').empty();
+        $('#artist').empty();
+        $('#lyr').empty();
+        $('#lyr-title2').append(`${lyricsData.result.track}<br>`);
+        $('#artist').append(`By ${lyricsData.result.artist}`);
+        $('#lyr').append(newLyr);
+        $('.lyr-con').removeClass('hidden');
         searchSentiLyrics(newLyr);
-        let search = `"${lyricsData.result.track} ${lyricsData.result.artist}"`;
+        let search = `'${lyricsData.result.track} ${lyricsData.result.artist}'`;
         searchYT(search);
     }
 }
 
 // display word used to search lyrics next to header of section
 function lyricsTitle(word) {
-    $("#lyrics-word").empty()
-    $("#lyrics-word").append(`<i>found by searching: ${word}</i> `);
+    $('#lyrics-word').empty()
+    $('#lyrics-word').append(`<i>found by searching: ${word}</i> `);
 }
 
 // get sentiment score of lyrics
@@ -372,15 +372,15 @@ function searchSentiLyrics(hasLyrics) {
 
 // show sentiment score of lyrics in DOM
 function displayLyricsSentScore(score) {
-    $("#lyr-sen").empty();
-    $("#lyr-sen").append(`${score}`);
+    $('#lyr-sen').empty();
+    $('#lyr-sen').append(`${score}`);
 }
 
 // YOUTUBE YOUTUBE YOUTUBE YOUTUBE YOUTUBE YOUTUBE YOUTUBE YOUTUBE YOUTUBE YOUTUBE YOUTUBE YOUTUBE
 // fetch data from YouTube API
 function initYT() {
     gapi.client.setApiKey(ytApiKey);
-    gapi.client.load("youtube", "v3", function () {
+    gapi.client.load('youtube', 'v3', () => {
     });
 }
 
@@ -388,8 +388,8 @@ function initYT() {
 // then display most viewed video since 2014 based on artist and lyrics
 function searchYT(word) {
     if (word === null) {
-        $("#yt-container").empty()
-        $("#yt-container").append('Since no lyrics were found. No videos were found.')
+        $('#yt-container').empty()
+        $('#yt-container').append('Since no lyrics were found. No videos were found.')
     } else {
         const request = gapi.client.youtube.search.list({
             part: 'snippet',
@@ -398,14 +398,14 @@ function searchYT(word) {
             order: 'viewCount',
             publishedAfter: '2014-01-01T00:00:00Z'
         });
-        request.execute(function (response) {
+        request.execute((response) => {
             let results = response.result;
-            $("#yt-container").html("");
-            $.each(results.items, function (index, item) {
-                $.get("html/item.html", function (data) {
-                    $("#video-word").empty()
-                    $(".video-title").append(`<span id="video-word"> <i>found by searching ${word}</i></span>`)
-                    $("#yt-container").append(tplawesome(data, [{ "title": item.snippet.title, "videoid": item.id.videoId }]));
+            $('#yt-container').html('');
+            $.each(results.items, (index, item) => {
+                $.get('html/item.html', (data) => {
+                    $('#video-word').empty()
+                    $('.video-title').append(`<span id="video-word"> <i>found by searching ${word}</i></span>`)
+                    $('#yt-container').append(tplawesome(data, [{'title': item.snippet.title, 'videoid': item.id.videoId}]));
                 });
             });
         });
@@ -415,11 +415,11 @@ function searchYT(word) {
 // WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD
 // add parameters to Word endpoint
 function watchButton() {
-    $("form").submit(event => {
+    $('form').submit(event => {
         event.preventDefault();
 
         const wordParams = {
-            hasDictionaryDef: "true",
+            hasDictionaryDef: 'true',
             maxCorpusCount: -1,
             minDictionaryCount: 1,
             maxDictionaryCount: -1,
@@ -445,15 +445,15 @@ function fetchWordApi(wordUrl) {
         })
         .then(wordData => randomWord(wordData))
         .catch(err => {
-            $("#error-message").removeClass("hidden");
-            $("#js-error-message").text(`Something went wrong. Try again in a few minutes.`);
+            $('#error-message').removeClass('hidden');
+            $('#js-error-message').text(`Something went wrong. Try again in a few minutes.`);
         });
 }
 
 // push the random word into all the other functions
 function randomWord(wordData) {
     let word = wordData.word
-    $("#container-index").hide();
+    $('#container-index').hide();
     searchWord(word);
 }
 
