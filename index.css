@@ -144,18 +144,33 @@ h2 {
   color: #9e9e9e;
 }
 
-/* poem & lyrics 'show more/show less' */
-.fulltext span, .less {
+/* poem 'show more/show less' */
+.fulltext span, #less-poe {
 	display: none;
 }
 
-/* poem & lyrics 'show more/show less' */
-.fulltext:target span, .fulltext:target .less {
+/* poem 'show more/show less' */
+.fulltext:target span, .fulltext:target #less-poe {
 	display: block;
 }
 
-/* poem & lyrics 'show more/show less' */
-.fulltext:target .more {
+/* poem 'show more/show less' */
+.fulltext:target #more-poe {
+	display: none;
+}
+
+/* lyrics 'show more/show less' */
+.fulltext span, #less-lyr {
+	display: none;
+}
+
+/* lyrics 'show more/show less' */
+.fulltext:target span, .fulltext:target #less-lyr {
+	display: block;
+}
+
+/* lyrics 'show more/show less' */
+.fulltext:target #more-lyr {
 	display: none;
 }
 
