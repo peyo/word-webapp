@@ -48,6 +48,7 @@ function searchWord(word) {
 
     const dictAPIKeyString = formatQueryParams(dictParams)
     const dictURL = `${dictEndPoint}${word}/definitions?${dictAPIKeyString}`;
+    $("#error-message").addClass("hidden");
     fetchDictAPI(dictURL);
 }
 
@@ -64,7 +65,7 @@ function fetchDictAPI(dictURL) {
         .then(dictData => displayDictAPI(dictData))
         .catch((err) => {
             $("#error-message").removeClass("hidden");
-            $("#js-error-message").text(`Something went wrong. Try again in a few minutes.`);
+            $("#js-error-message").text(`Something went wrong. Refresh the page and try again in a few minutes.`);
         });
 }
 
@@ -202,7 +203,7 @@ function fetchBookAPI(bookURL) {
         .then((bookData) => displayBookAPI(bookData))
         .catch((err) => {
             $('#error-message').removeClass('hidden');
-            $('#js-error-message').text(`Something went wrong. Try again in a few minutes.`);
+            $('#js-error-message').text(`Something went wrong. Refresh the page and try again in a few minutes.`);
         });
 }
 
@@ -439,7 +440,7 @@ function fetchWordAPI(wordURL) {
         .then((wordData) => randomWord(wordData))
         .catch((err) => {
             $('#error-message').removeClass('hidden');
-            $('#js-error-message').text(`Something went wrong. Try again in a few minutes.`);
+            $('#js-error-message').text(`Something went wrong. Refresh the page and try again in a few minutes.`);
         });
 }
 
