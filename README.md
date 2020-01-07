@@ -1,9 +1,14 @@
 # word-webapp
 
-Live app: https://peyo.github.io/word-webapp/
-Purpose: To help users get a better understanding and feeling of words.
+## Demo
 
-## features
+Live app: https://peyo.github.io/word-webapp/
+
+## Purpose
+
+To help users get a better understanding and feeling of words.
+
+## Features
 1. Click a button, get random word.
 1. Get sentiment of word.
 1. Get a poem based on word.
@@ -13,24 +18,33 @@ Purpose: To help users get a better understanding and feeling of words.
 1. Search another random word.
 
 ## APIs used
-1. dict api
-* random word
-* definition of word
+Dict: [Wordnik](https://developer.wordnik.com/)
+Poem: [Poetrydb](http://poetrydb.org/index.html)
+Books: [Google](https://developers.google.com/books)
+Lyrics: [Happi](https://happi.dev/docs/music)
+Video: [YouTube](https://developers.google.com/youtube/v3)
+Sentiment: [Sentimood](https://github.com/soops/sentimood)
 
-1. poem api
-* random word -> poem title & poet
+### API dataflow
 
-1. books api
-* poem title -> book
+1. Dict API used for:
+* Get random word
+* Get definition of word
 
-1. lyrics api
-* random word -> album, track, artist
-* album, track, artist -> lyrics (yes/no) -> if yes, lyrics
+2. Poem API used for:
+* Get poem title & poet **from** random word (Dict API)
 
-1. video api
-* artist and track name -> video
+3. Books API used for:
+* Get book **from** poem title (Poem API)
 
-1. sentiment api
-* definition -> word sentiment
-* poem -> poem sentiment
-* lyrics -> lyrics sentiment
+4. Lyrics API used for:
+* Get album, track, & artist **from** random word (Dict API)
+* Get lyrics **from** album, track, & artist if lyrics exist
+
+5. Video API used for:
+* Get video **from** artist & track (Lyrics API)
+
+6. Sentiment API used for:
+* Get word sentiment **from** definition (Dict API)
+* Get poem sentiment **from** poem (Poem API)
+* Get lyrics sentiment **from** lyrics (Lyrics API)
