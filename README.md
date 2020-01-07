@@ -2,6 +2,8 @@
 
 To help users get a better understanding and feeling of words.
 
+![Image of home screen](https://raw.githubusercontent.com/peyo/word-webapp/master/images/home-screen.png)
+
 ## Demo
 
 Live app: https://peyo.github.io/word-webapp/
