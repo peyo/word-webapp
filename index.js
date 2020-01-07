@@ -9,7 +9,7 @@ const lyricsAPIKey = '5d00f2fGlDaYcqaVdSbilkr3WSgRRNdwIkG5H3jgABG7Ko0qrDf7zOZP';
 
 const wordEndPoint = 'https://api.wordnik.com/v4/words.json/randomWord';
 const dictEndPoint = 'https://api.wordnik.com/v4/word.json/';
-const poemEndPoint = 'http://poetrydb.org/lines/';
+const poemEndPoint = 'https://poetrydb.org/lines/';
 const sentiAnEndPoint = 'https://language.googleapis.com/v1/documents:analyzeSentiment';
 const bookEndPoint = 'https://www.googleapis.com/books/v1/volumes';
 const lyricsIdEndPoint = 'https://api.happi.dev/v1/music';
@@ -19,12 +19,12 @@ const lyricsEndPoint = 'https://api.happi.dev/v1/music/';
 function tplawesome(e, t) {
     let res = e;
     for (var n = 0; n < t.length; n++) {
-        let res = res.replace(/\{\{(.*?)\}\}/g, function (e, r) {
-            return t[n][r]
+        let res = res.replace(/\{\{(.*?)\}\}/g, (r) => {
+            return t[n][r];
         });
     };
 
-    return res
+    return res;
 }
 
 // formatter used across all APIs (exluding Lyrics API)
@@ -393,7 +393,7 @@ function searchYT(word) {
         request.execute((response) => {
             let results = response.result;
             $('#yt-container').html('');
-            $.each(results.items, (index, item) => {
+            $.each(results.items, (item) => {
                 $.get('html/item.html', (data) => {
                     $('#video-word').empty();
                     $('.video-title').append(`<span id="video-word"> <i>found by searching ${word}</i></span>`);
