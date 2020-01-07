@@ -1,12 +1,10 @@
 # word-webapp
 
+To help users get a better understanding and feeling of words.
+
 ## Demo
 
 Live app: https://peyo.github.io/word-webapp/
-
-## Purpose
-
-To help users get a better understanding and feeling of words.
 
 ## Features
 1. Click a button, get random word.
