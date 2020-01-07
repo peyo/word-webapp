@@ -18,12 +18,12 @@ To help users get a better understanding and feeling of words.
 1. Search another random word.
 
 ## APIs used
-Dict: [Wordnik](https://developer.wordnik.com/)
-Poem: [Poetrydb](http://poetrydb.org/index.html)
-Books: [Google](https://developers.google.com/books)
-Lyrics: [Happi](https://happi.dev/docs/music)
-Video: [YouTube](https://developers.google.com/youtube/v3)
-Sentiment: [Sentimood](https://github.com/soops/sentimood)
+* Dict: [Wordnik](https://developer.wordnik.com/)
+* Poem: [Poetrydb](http://poetrydb.org/index.html)
+* Books: [Google](https://developers.google.com/books)
+* Lyrics: [Happi](https://happi.dev/docs/music)
+* Video: [YouTube](https://developers.google.com/youtube/v3)
+* Sentiment: [Sentimood](https://github.com/soops/sentimood)
 
 ### API dataflow
 
