@@ -50,3 +50,10 @@ Live app: https://peyo.github.io/word-webapp/
 * Get word sentiment **from** definition (Dict API)
 * Get poem sentiment **from** poem (Poem API)
 * Get lyrics sentiment **from** lyrics (Lyrics API)
+
+### Technology used
+
+* HTML
+* CSS
+* JavaScript
+* jQuery
