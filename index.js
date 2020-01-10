@@ -397,7 +397,7 @@ function searchYT(word) {
 function watchButton() {
     $('#form-random').submit(event => {
         event.preventDefault();
-
+        
         const wordParams = {
             hasDictionaryDef: 'true',
             maxCorpusCount: -1,
