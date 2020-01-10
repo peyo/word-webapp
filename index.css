@@ -67,7 +67,7 @@ h2 {
   padding-top: 21px;
 }
 
-.button {
+.button, button {
   border: 1px solid #ffffff;
   background-color: #e0e0e0;
   padding: 6px 15px 6px 15px;
@@ -76,15 +76,15 @@ h2 {
   border-radius: .2em;
 }
 
-.button:hover {
+.button:hover, button:hover {
   border: 1px solid #606060;
 }
 
-.button:active {
+.button:active, button:active {
   border: 1px solid #0080ff;
 }
 
-.button:focus {
+.button:focus, button:focus {
   outline: 0;
 }
 

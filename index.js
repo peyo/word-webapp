@@ -395,7 +395,7 @@ function searchYT(word) {
 // WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD
 // add parameters to Word endpoint
 function watchButton() {
-    $('form').submit(event => {
+    $('#form-random').submit(event => {
         event.preventDefault();
 
         const wordParams = {
@@ -435,7 +435,7 @@ function fetchWordAPI(wordURL) {
 function randomWord(wordData) {
     let word = wordData.word;
     $('#container-index').hide();
-    searchWord('offset');
+    searchWord('skull');
 }
 
 $(watchButton);
