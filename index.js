@@ -394,7 +394,7 @@ function searchYT(word) {
 // WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD
 // add parameters to Word endpoint
 function watchButton() {
-    $('#form-random').submit(event => {
+    $('form').submit(event => {
         event.preventDefault();
 
         const wordParams = {
