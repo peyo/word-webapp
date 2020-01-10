@@ -435,7 +435,7 @@ function fetchWordAPI(wordURL) {
 function randomWord(wordData) {
     let word = wordData.word;
     $('#container-index').hide();
-    searchWord('skull');
+    searchWord('love');
 }
 
 $(watchButton);
