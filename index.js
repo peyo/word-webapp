@@ -10,21 +10,15 @@ const lyricsAPIKey = '5d00f2fGlDaYcqaVdSbilkr3WSgRRNdwIkG5H3jgABG7Ko0qrDf7zOZP';
 const wordEndPoint = 'https://api.wordnik.com/v4/words.json/randomWord';
 const dictEndPoint = 'https://api.wordnik.com/v4/word.json/';
 const poemEndPoint = 'http://poetrydb.org/lines/';
-const sentiAnEndPoint = 'https://language.googleapis.com/v1/documents:analyzeSentiment';
 const bookEndPoint = 'https://www.googleapis.com/books/v1/volumes';
 const lyricsIdEndPoint = 'https://api.happi.dev/v1/music';
 const lyricsEndPoint = 'https://api.happi.dev/v1/music/';
 
-// template engine for taking in title and video id for YT used in 2.5. https://github.com/FriesFlorian/tplawesome
-function tplawesome(e, t) {
-    let res = e;
-    for (var n = 0; n < t.length; n++) {
-        let res = res.replace(/\{\{(.*?)\}\}/g, (r) => {
-            return t[n][r];
-        });
-    };
-
-    return res;
+// template engine for taking in videoid from YT. Inspired by: https://github.com/FriesFlorian/tplawesome
+function ytTemplate(videoId) {
+    let template = `https://www.youtube.com/embed/{{videoid}}`
+    let response = template.replace(/{{videoid}}/g, `${videoId}`);
+    return `<iframe width="560" height="315" src="${response}" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
 }
 
 // formatter used across all APIs (exluding Lyrics API)
@@ -266,12 +260,12 @@ function parseLyricsAPI(lyricsData) {
 // another API request to get lyrics from IDs
 // if no songs were found, pass null to displayLyricsAPI()
 function findHasLyrics(lyricsData) {
-    let data = lyricsData.result.filter((f) => f.hasLyrics)
-    if (data.length !== 0) {
-        formatQueryLyrics(data);
-    } else {
+    let data = lyricsData.result.filter((f) => f.haslyrics);
+    if (data.length === 0) {
         displayLyricsAPI(null);
-    };
+    } else {
+        formatQueryLyrics(data);
+    }
 }
 
 // format query for lyrics and fetch lyrics
@@ -337,7 +331,7 @@ function displayLyricsAPI(lyricsData) {
         $('#artist').append(`By ${lyricsData.result.artist}`);
         $('#lyr').append(newLyr);
         searchSentiLyrics(newLyr);
-        let search = `'${lyricsData.result.track} ${lyricsData.result.artist}'`;
+        let search = `${lyricsData.result.track} ${lyricsData.result.artist}`;
         searchYT(search);
     }
 }
@@ -392,17 +386,13 @@ function searchYT(word) {
             publishedAfter: '2014-01-01T00:00:00Z',
         });
         request.execute((response) => {
-            let results = response.result;
-            $('#yt-container').html('');
-            $.each(results.items, (item) => {
-                $.get('html/item.html', (data) => {
-                    $('#video-word').empty();
-                    $('.video-title').append(`<span id="video-word"> <i>found by searching ${word}</i></span>`);
-                    $('#yt-container').append(tplawesome(data, [{ 'title': item.snippet.title, 'videoid': item.id.videoId }]));
-                });
-            });
+            let videoId = response.items[0].id.videoId;
+            $('#yt-container').empty();
+            $('#video-word').empty();
+            $('#video-title').append(`<span id="video-word"> <i>found by searching ${word}</i></span>`);
+            $('#yt-container').append(ytTemplate([videoId]));
         });
-    }
+    };
 }
 
 // WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD
@@ -448,7 +438,7 @@ function fetchWordAPI(wordURL) {
 function randomWord(wordData) {
     let word = wordData.word;
     $('#container-index').hide();
-    searchWord(word);
+    searchWord('offset');
 }
 
 $(watchButton);

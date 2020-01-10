@@ -140,8 +140,10 @@ h2 {
   margin: 0 0 18px 0;
 }
 
-#poem-word {
+#poem-word, #lyrics-word, #video-word {
   color: #9e9e9e;
+  font-size: medium;
+  font-family: 'Helvetica', sans-serif;
 }
 
 /* poem 'show more/show less' */
@@ -172,14 +174,6 @@ h2 {
 /* lyrics 'show more/show less' */
 .fulltext:target #more-lyr {
 	display: none;
-}
-
-#lyrics-word {
-  color: #9e9e9e;
-}
-
-#video-word {
-  color: #9e9e9e;
 }
 
 .book-con {
@@ -218,11 +212,10 @@ h2 {
   position: relative;
   padding-bottom: 56.25%;
   height: 0;
-  overflow: hidden;
-  max-width: 1000px;
+  width: 100%;
 }
 
-#yt-container iframe, .yt-container object, .yt-container embed {
+#yt-container iframe {
   position: absolute;
   top: 0;
   left: 0;
@@ -236,21 +229,21 @@ h2 {
   margin: 21% 0 3% 0;
 }
 
+#word-links {
+  color: #606060;
+}
+
 #word-links:active {
   color: #0080ff;
 }
 
-#beginning, #end {
+#beginning {
   color: #606060;
   font-weight: 600;
 }
 
 #beginning:active {
   color: #0080ff;
-}
-
-#e-b {
-  font-size: xx-large;
 }
 
 @media only screen and (max-width: 320px) {
