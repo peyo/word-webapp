@@ -14,13 +14,6 @@ const bookEndPoint = 'https://www.googleapis.com/books/v1/volumes';
 const lyricsIdEndPoint = 'https://api.happi.dev/v1/music';
 const lyricsEndPoint = 'https://api.happi.dev/v1/music/';
 
-// template engine for taking in videoid from YT. Inspired by: https://github.com/FriesFlorian/tplawesome
-function ytTemplate(videoId) {
-    let template = `https://www.youtube.com/embed/{{videoid}}`
-    let response = template.replace(/{{videoid}}/g, `${videoId}`);
-    return `<iframe width="560" height="315" src="${response}" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-}
-
 // formatter used across all APIs (exluding Lyrics API)
 function formatQueryParams(params) {
     const queryItems = Object.keys(params)
@@ -390,7 +383,11 @@ function searchYT(word) {
             $('#yt-container').empty();
             $('#video-word').empty();
             $('#video-title').append(`<span id="video-word"> <i>found by searching ${word}</i></span>`);
-            $('#yt-container').append(ytTemplate([videoId]));
+            
+            let template = `https://www.youtube.com/embed/{{videoid}}`
+            let embedLink = template.replace(/{{videoid}}/g, `${videoId}`);
+            console.log(embedLink);
+            $('#yt-container').append(`<iframe src="${embedLink}" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`);
         });
     };
 }

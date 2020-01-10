@@ -212,38 +212,35 @@ h2 {
   position: relative;
   padding-bottom: 56.25%;
   height: 0;
-  width: 100%;
 }
 
 #yt-container iframe {
-  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
 }
 
-.hr-words {
+.hr-bottom {
   border: .5px solid #a0a0a0;
-  width: 30%;
-  margin: 21% 0 3% 0;
+  width: 100%;
+  margin: 21% 0 9% 0;
 }
 
-#word-links {
+.word-links, #more-lyr, #less-lyr, #more-poe, #less-poe, #buy, #beginning {
   color: #606060;
 }
 
-#word-links:active {
+.word-links:hover, #more-lyr:hover, #less-lyr:hover, #more-poe:hover, #less-poe:hover, #buy:hover, #beginning:hover {
+  color: #ff8800;
+}
+
+.word-links:active, #more-lyr:active, #less-lyr:active, #more-poe:active, #less-poe:active, #buy:active, #beginning:active {
   color: #0080ff;
 }
 
 #beginning {
-  color: #606060;
   font-weight: 600;
-}
-
-#beginning:active {
-  color: #0080ff;
 }
 
 @media only screen and (max-width: 320px) {
