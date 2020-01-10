@@ -386,7 +386,6 @@ function searchYT(word) {
             
             let template = `https://www.youtube.com/embed/{{videoid}}`
             let embedLink = template.replace(/{{videoid}}/g, `${videoId}`);
-            console.log(embedLink);
             $('#yt-container').append(`<iframe src="${embedLink}" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`);
         });
     };
@@ -397,7 +396,7 @@ function searchYT(word) {
 function watchButton() {
     $('#form-random').submit(event => {
         event.preventDefault();
-        
+
         const wordParams = {
             hasDictionaryDef: 'true',
             maxCorpusCount: -1,
@@ -435,7 +434,7 @@ function fetchWordAPI(wordURL) {
 function randomWord(wordData) {
     let word = wordData.word;
     $('#container-index').hide();
-    searchWord('love');
+    searchWord(word);
 }
 
 $(watchButton);
