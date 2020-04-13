@@ -2,8 +2,6 @@
 
 To help users get a better understanding and feeling of words.
 
-<kbd><img src="https://raw.githubusercontent.com/peyo/word-webapp/master/images/home-screen.png"></kbd>
-
 It's simple. Just click to use.
 
 ## Demo
