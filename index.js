@@ -9,7 +9,7 @@ const lyricsAPIKey = "5d00f2fGlDaYcqaVdSbilkr3WSgRRNdwIkG5H3jgABG7Ko0qrDf7zOZP";
 
 const wordEndPoint = "https://api.wordnik.com/v4/words.json/randomWord";
 const dictEndPoint = "https://api.wordnik.com/v4/word.json/";
-const poemEndPoint = "http://poetrydb.org/lines/";
+const poemEndPoint = "https://poetrydb.org/lines/";
 const bookEndPoint = "https://www.googleapis.com/books/v1/volumes";
 const lyricsIdEndPoint = "https://api.happi.dev/v1/music";
 const lyricsEndPoint = "https://api.happi.dev/v1/music/";
