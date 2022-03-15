@@ -3,7 +3,7 @@
 // API keys and endpoints
 const wordAPIKey = "m2vinpl4rdeeur4aw73brwq1b91d53c8awznzo59nkli8ccbw";
 const sentiAPIKey = "AIzaSyBTvtLY_gZV6NpwJJTNHScZxC1ta6vNsQM";
-const ytAPIKey = "AIzaSyBbbEPhvZiZV8jHTJdgfviDU1ABN6W-UBw";
+const ytAPIKey = "AIzaSyDluYq1j01k0Gi6POp9DV-nDdzr7Bi7t1w";
 const bookAPIKey = "AIzaSyBiEL2F_VV6f1BRNPNkjsC0kIUvjCvWuAA";
 const lyricsAPIKey = "5d00f2fGlDaYcqaVdSbilkr3WSgRRNdwIkG5H3jgABG7Ko0qrDf7zOZP";
 
@@ -395,7 +395,6 @@ function searchYT(word) {
       $("#video-title").append(
         `<span id="video-word"> <i>found by searching ${word}</i></span>`
       );
-
       let template = `https://www.youtube.com/embed/{{videoid}}`;
       let embedLink = template.replace(/{{videoid}}/g, `${videoId}`);
       $("#yt-container").append(
